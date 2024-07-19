@@ -1,11 +1,14 @@
-package br.htech.dice
+package br.htech.dice.data
 
 import br.htech.dice.model.DieFace
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DiceRepository {
+@Singleton
+class RealmDiceRepository @Inject constructor() : DiceRepository {
     private val realm: Realm
 
     init {
@@ -13,13 +16,13 @@ class DiceRepository {
         realm = Realm.open(config)
     }
 
-    fun insertDie(dieFace: DieFace) {
+    override fun insertDie(dieFace: DieFace) {
         realm.writeBlocking {
             copyToRealm(dieFace)
         }
     }
 
-    fun getDieFaceByNumber(number: Int): DieFace? {
+    override fun getDieFaceByNumber(number: Int): DieFace? {
         return realm.query<DieFace>("number == $0", number).first().find()
     }
 }

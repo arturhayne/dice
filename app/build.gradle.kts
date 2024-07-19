@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("io.realm.kotlin")
+    id("com.google.devtools.ksp") version "1.9.0-1.0.12"
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -72,4 +74,7 @@ dependencies {
     implementation("io.realm.kotlin:library-base:1.16.0")
     implementation("io.realm.kotlin:library-sync:1.16.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
+    implementation("com.google.dagger:hilt-android:2.50")
+    ksp("com.google.dagger:dagger-compiler:2.50")
+    ksp("com.google.dagger:hilt-compiler:2.50")
 }
