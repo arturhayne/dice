@@ -28,7 +28,7 @@ fun DiceWithButtonAndImage(dieFace: StateFlow<DieFace>, rollDice: () -> Unit) {
     val result by dieFace.collectAsState()
 
     Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(painterResource(id = result.resource), contentDescription = "dice")
+        Image(painterResource(id = result.resource.takeIf { it > 0 } ?: R.drawable.dice_1), contentDescription = "dice")
         Text(text = result.number.takeIf { it > 0 }?.toString() ?: "Role o dado")
         Button(onClick = { rollDice() }) {
             Text(text = "Rolar dado")
