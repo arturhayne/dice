@@ -29,7 +29,7 @@ fun DiceWithButtonAndImage(dieFace: StateFlow<DieFace>, rollDice: () -> Unit) {
 
     Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(painterResource(id = result.resource), contentDescription = "dice")
-        Text(text = result.number.toString())
+        Text(text = result.number.takeIf { it > 0 }?.toString() ?: "Role o dado")
         Button(onClick = { rollDice() }) {
             Text(text = "Rolar dado")
         }
@@ -39,9 +39,6 @@ fun DiceWithButtonAndImage(dieFace: StateFlow<DieFace>, rollDice: () -> Unit) {
 @Preview
 @Composable
 fun screenPreview() {
-    val fakeDieFace = MutableStateFlow(DieFace.ONE)
-    val fakeRollDice: () -> Unit = {
-        fakeDieFace.value = DieFace.values().random()
-    }
-    DiceWithButtonAndImage(dieFace = fakeDieFace, rollDice = fakeRollDice)
+    val fakeDieFace = MutableStateFlow(DieFace(1, R.drawable.dice_1))
+    DiceWithButtonAndImage(dieFace = fakeDieFace, rollDice = fun() {})
 }
